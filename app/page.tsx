@@ -1,67 +1,44 @@
 import emojiFlags from "emoji-flags";
-import { getUniqueListBy } from "../utils/getUniqueListBy";
+import { TMatches, TMatchResults, TTeams } from "../types/types";
+import { uniqMap } from "../utils/getUniqueListBy";
 import RowData from "./RowData";
 import Tag from "./Tag";
-
-type TStatus = "in_progress" | "futur_scheduled" | "completed";
-type TTeam = {
-  code: string;
-  name: string;
-  score: number;
-  winner: boolean;
-};
-
-export type TResults = {
-  id: number;
-  status: TStatus;
-  firstTeam: TTeam;
-  secondTeam: TTeam;
-};
 
 export default async function Page() {
   const res = await fetch("https://worldcupjson.net/matches", {
     next: { revalidate: 60 },
   });
-  const data = await res.json();
+  const data: TMatches[] = await res.json();
 
-  const matches: TResults[] = data.map(
-    (match: {
-      id: number;
-      status: TStatus;
-      home_team: { name: string; goals: number; country: string };
-      winner_code: string;
-      away_team: { name: string; goals: number; country: string };
-    }) => {
-      return {
-        id: match.id,
-        status: match.status,
-        firstTeam: {
-          code: match.home_team.country,
-          name: match.home_team.name,
-          score: match.home_team.goals,
-          winner: match.home_team.country === match.winner_code,
-        },
-        secondTeam: {
-          code: match.away_team.country,
-          name: match.away_team.name,
-          score: match.away_team.goals,
-          winner: match.away_team.country === match.winner_code,
-        },
-      };
-    }
-  );
+  const matches: TMatchResults[] = data.map((match) => {
+    return {
+      id: match.id,
+      status: match.status,
+      firstTeam: {
+        code: match.home_team.country,
+        name: match.home_team.name,
+        score: match.home_team.goals,
+        winner: match.home_team.country === match.winner_code,
+      },
+      secondTeam: {
+        code: match.away_team.country,
+        name: match.away_team.name,
+        score: match.away_team.goals,
+        winner: match.away_team.country === match.winner_code,
+      },
+    };
+  });
 
-  const getTeams = () => {
-    const teams = matches.map((team) => ({
+  const getTeams = (): TTeams[] => {
+    const teams: TTeams[] = matches.map((team) => ({
       name: team.firstTeam.name,
       code: team.firstTeam.code,
+      status: team.status,
     }));
 
-    return [
-      ...getUniqueListBy(teams, "code").filter(
-        (team) => team.name !== "To Be Determined"
-      ),
-    ];
+    return uniqMap(teams, "code")
+      .filter((team: TTeams) => team.status !== "future_unscheduled")
+      .sort((a, b) => a.name.localeCompare(b.name));
   };
 
   return (
@@ -85,7 +62,7 @@ export default async function Page() {
       </div>
       {matches
         .reverse()
-        .filter((team) => team.firstTeam.name !== "To Be Determined")
+        .filter((team) => team.status !== "future_unscheduled")
         .map((match) => (
           <div key={match.id}>
             <RowData match={match} />

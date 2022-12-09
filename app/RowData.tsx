@@ -1,9 +1,9 @@
-import type { TResults } from "./page";
 import cn from "classnames";
 import emojiFlags from "emoji-flags";
+import { TMatchResults } from "../types/types";
 
 type TProps = {
-  match: TResults;
+  match: TMatchResults;
 };
 
 export default function RowData({ match }: TProps) {
