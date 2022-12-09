@@ -23,7 +23,7 @@ export type TResults = {
 
 export default async function Page() {
   const res = await fetch("https://worldcupjson.net/matches", {
-    next: { revalidate: 10 },
+    next: { revalidate: 60 },
   });
   const data = await res.json();
 
