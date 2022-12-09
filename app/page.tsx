@@ -22,7 +22,9 @@ export type TResults = {
 };
 
 export default async function Page() {
-  const res = await fetch("https://worldcupjson.net/matches");
+  const res = await fetch("https://worldcupjson.net/matches", {
+    next: { revalidate: 10 },
+  });
   const data = await res.json();
 
   const matches: TResults[] = data.map(
