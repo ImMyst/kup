@@ -66,19 +66,21 @@ export default async function Page() {
 
   return (
     <div>
-      <h1 className="text-3xl font-semibold">⚽️ Kup</h1>
-      <div className="mb-2 overflow-hidden">
-        <h2 className="text-xl mt-4 mb-2 font-semibold">Planning</h2>
-        <p className="mt-2 mb-2 font-semibold text-gray-700">Teams</p>
-        <div className="flex space-x-2 overflow-auto touch-auto pb-4 flex-nowrap">
-          {getTeams().map((team) => (
-            <Tag key={team.code}>
-              {emojiFlags.data.find((country) => country.name === team.name)
-                ?.emoji ?? "🏳️"}
-              &nbsp;
-              {team.code}
-            </Tag>
-          ))}
+      <div className="sticky top-0 z-50 bg-white/80 pt-10 backdrop-blur-sm">
+        <h1 className="text-3xl font-semibold">⚽️ Kup</h1>
+        <div className="mb-2 overflow-hidden">
+          <h2 className="text-xl mt-4 mb-2 font-semibold">Planning</h2>
+          <p className="mt-2 mb-2 font-semibold text-gray-700">Teams</p>
+          <div className="flex space-x-2 overflow-auto touch-auto pb-4 flex-nowrap">
+            {getTeams().map((team) => (
+              <Tag key={team.code}>
+                {emojiFlags.data.find((country) => country.name === team.name)
+                  ?.emoji ?? "🏳️"}
+                &nbsp;
+                {team.code}
+              </Tag>
+            ))}
+          </div>
         </div>
       </div>
       {matches
