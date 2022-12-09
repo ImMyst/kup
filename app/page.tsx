@@ -1,10 +1,14 @@
+import emojiFlags from "emoji-flags";
 import Image from "next/image";
+import { getUniqueListBy } from "../utils/getUniqueListBy";
 import RowData from "./RowData";
-import cn from "classnames";
+import Tag from "./Tag";
+
+type TStatus = "in_progress" | "futur_scheduled" | "completed";
 
 export type TResults = {
-  id: string;
-  status: "in_progress" | "futur_scheduled" | "completed";
+  id: number;
+  status: TStatus;
   firstTeam: {
     code: string;
     name: string;
@@ -29,11 +33,11 @@ export default async function Page() {
 
   const matches: TResults[] = data.map(
     (match: {
-      id: any;
-      status: any;
-      home_team: { name: any; goals: any; country: any };
-      winner_code: any;
-      away_team: { name: any; goals: any; country: any };
+      id: number;
+      status: TStatus;
+      home_team: { name: string; goals: number; country: string };
+      winner_code: string;
+      away_team: { name: string; goals: number; country: string };
     }) => {
       return {
         id: match.id,
@@ -56,13 +60,38 @@ export default async function Page() {
     }
   );
 
+  const getTeams = () => {
+    const teams = matches.map((team) => ({
+      name: team.firstTeam.name,
+      code: team.firstTeam.code,
+    }));
+
+    return [
+      ...getUniqueListBy(teams, "code").filter(
+        (team) => team.name !== "To Be Determined"
+      ),
+    ];
+  };
+
   return (
     <div>
       <h1 className="text-3xl font-semibold">⚽️ Kup</h1>
-      <h2 className="text-xl mt-4 mb-2 font-semibold">Planning</h2>
+      <div className="mb-2 overflow-hidden">
+        <h2 className="text-xl mt-4 mb-2 font-semibold">Planning</h2>
+        <div className="flex space-x-2 overflow-auto touch-auto pb-4 flex-nowrap">
+          {getTeams().map((team) => (
+            <Tag key={team.code}>
+              {emojiFlags.data.find((country) => country.name === team.name)
+                ?.emoji ?? "🏳️"}
+              &nbsp;
+              {team.code}
+            </Tag>
+          ))}
+        </div>
+      </div>
       {matches
         .reverse()
-        .filter((e) => e.firstTeam.name !== "To Be Determined")
+        .filter((team) => team.firstTeam.name !== "To Be Determined")
         .map((match) => (
           <div key={match.id}>
             <RowData match={match} />

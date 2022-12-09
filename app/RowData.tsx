@@ -1,5 +1,6 @@
 import type { TResults } from "./page";
 import cn from "classnames";
+import emojiFlags from "emoji-flags";
 
 type TProps = {
   match: TResults;
@@ -21,9 +22,13 @@ export default function RowData({ match }: TProps) {
           "font-bold": match.firstTeam.winner && match.status === "completed",
         })}
       >
+        {emojiFlags.data.find(
+          (country) => country.name === match.firstTeam.name
+        )?.emoji ?? "🏳️"}
+        &nbsp;
         {match.firstTeam.code}
       </p>
-      <div className="text-center">
+      <div className="text-center mx-auto">
         <p className="text-gray-700">
           <span
             className={cn("text-gray-700", {
@@ -52,6 +57,10 @@ export default function RowData({ match }: TProps) {
         })}
       >
         {match.secondTeam.code}
+        &nbsp;
+        {emojiFlags.data.find(
+          (country) => country.name === match.secondTeam.name
+        )?.emoji ?? "🏳️"}
       </p>
     </div>
   );
