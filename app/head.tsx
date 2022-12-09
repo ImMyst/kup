@@ -1,7 +1,7 @@
 export default function Head() {
   return (
     <>
-      <title>Kup</title>
+      <title>Kup - 2022 FIFA World Cup Results</title>
       <meta content="width=device-width, initial-scale=1" name="viewport" />
       <meta
         name="description"
