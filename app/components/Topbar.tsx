@@ -1,5 +1,5 @@
 import emojiFlags from "emoji-flags";
-import { uniqMap } from "@utils/getUniqueListBy";
+import { uniqMap } from "@utils/uniqMap";
 import { TMatchResults, TTeams } from "@utils/types";
 import Tag from "@components/Tag";
 
