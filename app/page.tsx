@@ -1,8 +1,6 @@
-import emojiFlags from "emoji-flags";
-import { TMatches, TMatchResults, TTeams } from "../types/types";
-import { uniqMap } from "../utils/getUniqueListBy";
-import RowData from "./RowData";
-import Tag from "./Tag";
+import RowData from "@components/RowData";
+import Topbar from "@components/Topbar";
+import { TMatches, TMatchResults } from "@utils/types";
 
 export default async function Page() {
   const res = await fetch("https://worldcupjson.net/matches", {
@@ -29,45 +27,18 @@ export default async function Page() {
     };
   });
 
-  const getTeams = (): TTeams[] => {
-    const teams: TTeams[] = matches.map((team) => ({
-      name: team.firstTeam.name,
-      code: team.firstTeam.code,
-      status: team.status,
-    }));
-
-    return uniqMap(teams, "code")
-      .filter((team: TTeams) => team.status !== "future_unscheduled")
-      .sort((a, b) => a.name.localeCompare(b.name));
-  };
+  const filteredMatches = matches
+    .reverse()
+    .filter((team) => team.status !== "future_unscheduled");
 
   return (
     <div>
-      <div className="sticky top-0 z-50 bg-white/80 pt-10 backdrop-blur-sm">
-        <h1 className="text-3xl font-semibold">⚽️ Kup</h1>
-        <div className="mb-2 overflow-hidden">
-          <h2 className="text-xl mt-4 mb-2 font-semibold">Planning</h2>
-          <p className="mt-2 mb-2 font-semibold text-gray-700">Teams</p>
-          <div className="flex space-x-2 overflow-auto touch-auto pb-4 flex-nowrap">
-            {getTeams().map((team) => (
-              <Tag key={team.code}>
-                {emojiFlags.data.find((country) => country.name === team.name)
-                  ?.emoji ?? "🏳️"}
-                &nbsp;
-                {team.code}
-              </Tag>
-            ))}
-          </div>
+      <Topbar matches={filteredMatches} />
+      {filteredMatches.map((match) => (
+        <div key={match.id}>
+          <RowData match={match} />
         </div>
-      </div>
-      {matches
-        .reverse()
-        .filter((team) => team.status !== "future_unscheduled")
-        .map((match) => (
-          <div key={match.id}>
-            <RowData match={match} />
-          </div>
-        ))}
+      ))}
     </div>
   );
 }

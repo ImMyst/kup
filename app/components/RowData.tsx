@@ -1,6 +1,6 @@
 import cn from "classnames";
 import emojiFlags from "emoji-flags";
-import { TMatchResults } from "../types/types";
+import { TMatchResults } from "@utils/types";
 
 type TProps = {
   match: TMatchResults;
