@@ -49,9 +49,8 @@ export default function RowData({ match }: TProps) {
           </span>
         </p>
         {match.status !== "completed" && match.status !== "in_progress" && (
-          <p className="text-xs text-gray-500">
-            {new Date(match.date).toLocaleDateString()} -
-            {new Date(match.date).toLocaleTimeString().slice(0, 5)}
+          <p className="flex items-center text-xs text-gray-500">
+            {new Date(match.date).toLocaleString().replace(", ", " ")}
           </p>
         )}
       </div>
