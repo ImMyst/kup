@@ -1,3 +1,4 @@
+import Footer from "@components/Footer";
 import RowData from "@components/RowData";
 import Topbar from "@components/Topbar";
 import { TMatches, TMatchResults } from "@utils/types";
@@ -40,6 +41,7 @@ export default async function Page() {
           <RowData match={match} />
         </div>
       ))}
+      <Footer />
     </div>
   );
 }
