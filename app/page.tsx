@@ -12,6 +12,7 @@ export default async function Page() {
     return {
       id: match.id,
       status: match.status,
+      date: match.datetime,
       firstTeam: {
         code: match.home_team.country,
         name: match.home_team.name,

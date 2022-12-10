@@ -46,6 +46,7 @@ export type TTeam = {
 export type TMatchResults = {
   id: number;
   status: TStatus;
+  date: string;
   firstTeam: TTeam;
   secondTeam: TTeam;
 };
