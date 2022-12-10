@@ -14,6 +14,7 @@ export default async function Page() {
       id: match.id,
       status: match.status,
       date: match.datetime,
+      stage: match.stage_name,
       firstTeam: {
         code: match.home_team.country,
         name: match.home_team.name,
@@ -29,9 +30,7 @@ export default async function Page() {
     };
   });
 
-  const filteredMatches = matches
-    .reverse()
-    .filter((team) => team.status !== "future_unscheduled");
+  const filteredMatches = matches.reverse();
 
   return (
     <div>

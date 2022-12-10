@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <p className="flex items-center space-x-1 pt-4 justify-center text-xs text-gray-600">
+    <p className="flex items-center space-x-1 pt-5 justify-center text-xs text-gray-600">
       <span>Made with ❤️ by</span>
       <a
         className="text-blue-500 underline"
