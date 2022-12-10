@@ -17,7 +17,7 @@ export default function RowData({ match }: TProps) {
       )}
       <p
         className={cn("ml-4", {
-          "line-through text-gray-600":
+          "line-through text-gray-600/70":
             !match.firstTeam.winner && match.status === "completed",
           "font-bold": match.firstTeam.winner && match.status === "completed",
         })}
@@ -56,7 +56,7 @@ export default function RowData({ match }: TProps) {
       </div>
       <p
         className={cn("mr-4", {
-          "line-through text-gray-600":
+          "line-through text-gray-600/70":
             !match.secondTeam.winner && match.status === "completed",
           "font-bold": match.secondTeam.winner && match.status === "completed",
         })}
