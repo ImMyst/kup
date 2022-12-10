@@ -20,7 +20,7 @@ export default function Topbar({ matches }: TProps) {
       .sort((a, b) => a.name.localeCompare(b.name));
   };
   return (
-    <div className="sticky top-0 z-50 bg-white/80 pt-10 backdrop-blur-sm">
+    <div className="sticky md:ml-0 mx-6 top-0 z-50 bg-white/80 pt-10 backdrop-blur-sm">
       <h1 className="text-3xl font-semibold">⚽️ Kup</h1>
       <div className="mb-2 overflow-hidden">
         <h2 className="text-xl mt-4 mb-2 font-semibold">Planning</h2>
