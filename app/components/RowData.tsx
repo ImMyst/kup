@@ -19,8 +19,13 @@ export default function RowData({ match }: TProps) {
         <p
           className={cn("ml-4", {
             "line-through text-gray-600/70":
-              !match.firstTeam.winner && match.status === "completed",
-            "font-bold": match.firstTeam.winner && match.status === "completed",
+              !match.firstTeam.winner &&
+              match.firstTeam.winner !== match.secondTeam.winner &&
+              match.status === "completed",
+            "font-bold":
+              match.firstTeam.winner &&
+              match.firstTeam.winner !== match.secondTeam.winner &&
+              match.status === "completed",
           })}
         >
           {emojiFlags.data.find(
@@ -69,9 +74,13 @@ export default function RowData({ match }: TProps) {
         <p
           className={cn("mr-4", {
             "line-through text-gray-600/70":
-              !match.secondTeam.winner && match.status === "completed",
+              !match.secondTeam.winner &&
+              match.secondTeam.winner !== match.firstTeam.winner &&
+              match.status === "completed",
             "font-bold":
-              match.secondTeam.winner && match.status === "completed",
+              match.secondTeam.winner &&
+              match.secondTeam.winner !== match.firstTeam.winner &&
+              match.status === "completed",
           })}
         >
           {match.secondTeam.code === "W62" || match.secondTeam.code === "RU62"

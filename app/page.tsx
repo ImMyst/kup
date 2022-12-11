@@ -30,6 +30,8 @@ export default async function Page() {
     };
   });
 
+  console.log(matches);
+
   const filteredMatches = matches.reverse();
 
   return (
