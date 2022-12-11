@@ -40,7 +40,7 @@ export default function RowData({ match }: TProps) {
         </p>
       </div>
       <div className="flex flex-col space-y-1 items-center text-center mx-auto">
-        {(match.status === "completed" || match.status === "in_progress") && (
+        {match.status === "completed" || match.status === "in_progress" ? (
           <p className="text-gray-700">
             <span
               className={cn("text-gray-700", {
@@ -58,8 +58,7 @@ export default function RowData({ match }: TProps) {
               {match.secondTeam.score}
             </span>
           </p>
-        )}
-        {match.status !== "completed" && match.status !== "in_progress" && (
+        ) : (
           <p className="flex items-center text-xs text-gray-500">
             {new Date(match.date).toLocaleString().replace(", ", " ")}
           </p>
