@@ -1,7 +1,9 @@
 import Footer from "@components/Footer";
 import RowData from "@components/RowData";
 import Topbar from "@components/Topbar";
+import Winner from "@components/Winner";
 import { TMatches, TMatchResults } from "@utils/types";
+import emojiFlags from "emoji-flags";
 
 export default async function Page() {
   const res = await fetch("https://worldcupjson.net/matches", {
@@ -35,6 +37,12 @@ export default async function Page() {
   return (
     <div>
       <Topbar matches={filteredMatches} />
+      <Winner>
+        <div className="flex space-x-1">
+          <span>{emojiFlags.AR.emoji}</span>
+          <span>Argentina</span>
+        </div>
+      </Winner>
       {filteredMatches.map((match) => (
         <div key={match.id}>
           <RowData match={match} />
